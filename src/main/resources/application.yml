@@ -1,1 +1,13 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    tomcat:
+      testOnBorrow: true
+      validationQuery: SELECT 1
 
+server:
+  port: 8080
