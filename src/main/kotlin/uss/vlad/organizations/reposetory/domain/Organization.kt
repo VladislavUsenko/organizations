@@ -3,6 +3,7 @@ package uss.vlad.organizations.reposetory.domain
 import org.hibernate.Hibernate
 import org.hibernate.annotations.Nationalized
 import java.time.LocalDateTime
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -26,15 +27,12 @@ data class Organization(
     @Column(name = "legal_address")
     var legalAddress: String? = null,
 
-    @Nationalized
     @Column(name = "org_status")
-    var status: OrganizationStatus? = null,
+    var status: OrganizationStatus? = OrganizationStatus.ENABLED,
 
-    @Nationalized
     @Column(name = "time_created")
     var timeCreated: LocalDateTime? = null,
 
-    @Nationalized
     @Column(name = "time_updated")
     var timeUpdated: LocalDateTime? = null
 ) {
@@ -46,9 +44,10 @@ data class Organization(
         return id != null && id == other.id
     }
 
-    override fun hashCode(): Int = 0
+    override fun hashCode(): Int  =
+         Objects.hash(id, name, account)
 
-    @Override
+
     override fun toString(): String {
         return this::class.simpleName + "(id = $id , name = $name , legalAddress = $legalAddress )"
     }
