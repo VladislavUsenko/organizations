@@ -8,6 +8,8 @@ spring:
     tomcat:
       testOnBorrow: true
       validationQuery: SELECT 1
-
+  flyway:
+    enabled: true
+    locations: classpath:/db/migration
 server:
   port: 8080
