@@ -18,34 +18,34 @@ import java.util.ArrayList
 @Configuration
 @EnableSwagger2
 @Import(BeanValidatorPluginsConfiguration::class)
-open class SwaggerConfig {
+class SwaggerConfig {
 
     @Bean
-    open fun api(): Docket {
+    fun api(): Docket {
 
         val schemeList = ArrayList<SecurityScheme>()
         schemeList.add(BasicAuth("basicAuth"))
 
         return Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("uss.vlad.organization"))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(getApiInfo())
-                .securitySchemes(schemeList)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("uss.vlad.organization"))
+            .paths(PathSelectors.any())
+            .build()
+            .apiInfo(getApiInfo())
+            .securitySchemes(schemeList)
     }
 
     private fun getApiInfo(): ApiInfo {
         return ApiInfo(
-                "Organization API",
-                "this API: \n" +
-                        "* service for Organization. \n",
-                "0.1.0",
-                "",
-                Contact("Ussenko Vladislav", "", "your@mail.com"),
-                "",
-                "",
-                emptyList()
+            "Organization API",
+            "this API: \n" +
+                    "* service for Organization. \n",
+            "0.1.0",
+            "",
+            Contact("Ussenko Vladislav", "", "your@mail.com"),
+            "",
+            "",
+            emptyList()
         )
     }
 }

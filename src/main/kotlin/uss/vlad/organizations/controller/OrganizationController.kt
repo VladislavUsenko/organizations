@@ -18,7 +18,8 @@ import uss.vlad.organizations.service.OrganizationService
 @RequestMapping("/api/organization")
 @Api(
     description = "Organization management",
-    tags = ["Organization Controller"]
+    tags = ["Organization Controller"],
+    authorizations = [Authorization(value = "basicAuth")]
 )
 class OrganizationController(
     private val service: OrganizationService

@@ -13,3 +13,10 @@ spring:
     locations: classpath:/db/migration
 server:
   port: 8080
+
+app:
+  security:
+    enabled: true
+    login: admin
+    pass: admin
+
