@@ -6,27 +6,25 @@ import io.swagger.annotations.Authorization
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
-import uss.vlad.organizations.controller.dto.OrganizationDto
+import uss.vlad.organizations.controller.dto.MerchantDto
 import uss.vlad.organizations.controller.dto.Response
 import uss.vlad.organizations.exception.NotFoundException
 import uss.vlad.organizations.reposetory.domain.Status
 import uss.vlad.organizations.service.MerchantService
-import uss.vlad.organizations.service.OrganizationService
 
 @RestController
-@RequestMapping("/api/organization")
+@RequestMapping("/api/merchant")
 @Api(
-    description = "Organization management",
-    tags = ["Organization Controller"],
+    description = "Merchant management",
+    tags = ["Merchant Controller"],
     authorizations = [Authorization(value = "basicAuth")]
 )
-class OrganizationController(
-    private val service: OrganizationService,
-    private val merchService: MerchantService
+class MerchantController(
+    private val service: MerchantService
 ) {
 
     @ApiOperation(
-        value = "Get an organization by identifier",
+        value = "Get a merchant by identifier",
         authorizations = [Authorization(value = "basicAuth")],
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -35,35 +33,31 @@ class OrganizationController(
         method = [RequestMethod.GET]
     )
     @Throws(NotFoundException::class)
-    fun getOrganizationById(@PathVariable id: Long): Response =
+    fun getMerchantById(@PathVariable id: Long): Response =
         Response(
             status = HttpStatus.OK,
             data = service.findById(id)
         )
 
     @ApiOperation(
-        value = "Get an organization by merchant's identifier",
+        value = "Get a merchants by organization's identifier",
         authorizations = [Authorization(value = "basicAuth")],
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     @RequestMapping(
-        value = ["by-merch/{merchId}"],
+        value = ["by-org/{orgId}"],
         method = [RequestMethod.GET]
     )
     @Throws(NotFoundException::class)
-    fun getOrganizationByMerchantId(@PathVariable merchId: Long): Response {
-
-        val merch = merchService.findById(merchId)
-
-        return Response(
+    fun getMerchantByOrgId(@PathVariable orgId: Long): Response =
+        Response(
             status = HttpStatus.OK,
-            data = service.findById(merch.organizationId!!)
+            data = service.findByOrgId(orgId)
         )
-    }
 
 
     @ApiOperation(
-        value = "Save new organization",
+        value = "Save new merchant",
         authorizations = [Authorization(value = "basicAuth")],
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -72,14 +66,14 @@ class OrganizationController(
         method = [RequestMethod.POST]
     )
     @Throws(NotFoundException::class)
-    fun saveOrganization(@RequestBody dto: OrganizationDto): Response =
+    fun saveMerchant(@RequestBody dto: MerchantDto): Response =
         Response(
             status = HttpStatus.OK,
-            data = service.saveOrganization(dto)
+            data = service.saveMerchant(dto)
         )
 
     @ApiOperation(
-        value = "Update an organization by identifier",
+        value = "Update a merchant by identifier",
         authorizations = [Authorization(value = "basicAuth")],
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -88,17 +82,17 @@ class OrganizationController(
         method = [RequestMethod.PUT]
     )
     @Throws(NotFoundException::class)
-    fun updateOrganization(
+    fun updateMerchant(
         @PathVariable id: Long,
-        @RequestBody dto: OrganizationDto
+        @RequestBody dto: MerchantDto
     ): Response =
         Response(
             status = HttpStatus.OK,
-            data = service.updateOrganization(id, dto)
+            data = service.updateMerchant(id, dto)
         )
 
     @ApiOperation(
-        value = "Update an organization's status by identifier",
+        value = "Update a merchant's status by identifier",
         authorizations = [Authorization(value = "basicAuth")],
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -117,7 +111,26 @@ class OrganizationController(
         )
 
     @ApiOperation(
-        value = "Delete an organization",
+        value = "Update a orgId",
+        authorizations = [Authorization(value = "basicAuth")],
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @RequestMapping(
+        value = ["update-org-id/{id}/{orgId}"],
+        method = [RequestMethod.PUT]
+    )
+    @Throws(NotFoundException::class)
+    fun updateOrganization(
+        @PathVariable id: Long,
+        @PathVariable orgId: Long
+    ): Response =
+        Response(
+            status = HttpStatus.OK,
+            data = service.updateOrganizationId(id, orgId)
+        )
+
+    @ApiOperation(
+        value = "Delete a merchant",
         authorizations = [Authorization(value = "basicAuth")],
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -126,7 +139,7 @@ class OrganizationController(
         method = [RequestMethod.DELETE]
     )
     @Throws(NotFoundException::class)
-    fun deleteOrganization(
+    fun deleteMerchant(
         @PathVariable id: Long
     ): Response =
         Response(

@@ -6,7 +6,7 @@ import uss.vlad.organizations.exception.NotFoundException
 import uss.vlad.organizations.exception.OrganizationException
 import uss.vlad.organizations.reposetory.OrganizationRepository
 import uss.vlad.organizations.reposetory.domain.Organization
-import uss.vlad.organizations.reposetory.domain.OrganizationStatus
+import uss.vlad.organizations.reposetory.domain.Status
 
 @Service
 class OrganizationService(
@@ -40,7 +40,7 @@ class OrganizationService(
 
     }
 
-    fun updateStatus(id: Long, status: OrganizationStatus) {
+    fun updateStatus(id: Long, status: Status) {
         val organization = findById(id)
         organization.status = status
         repository.save(organization)

@@ -3,12 +3,11 @@ package uss.vlad.organizations.reposetory.domain
 import org.hibernate.Hibernate
 import org.hibernate.annotations.Nationalized
 import java.time.LocalDateTime
-import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "organization")
-data class Organization(
+@Table(name = "merchant")
+data class Merchant(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,46 +15,39 @@ data class Organization(
     var id: Long? = null,
 
     @Nationalized
-    @Column(name = "org_name")
+    @Column(name = "name")
     var name: String? = null,
 
     @Nationalized
-    @Column(name = "org_account")
-    var account: String? = null,
+    @Column(name = "address")
+    var address: String? = null,
 
-    @Nationalized
-    @Column(name = "legal_address")
-    var legalAddress: String? = null,
-
-    @Column(name = "org_status")
+    @Column(name = "status")
     var status: Status? = Status.ENABLED,
+
+    @Column(name = "org_id")
+    var organizationId: Long? = null,
 
     @Column(name = "time_created")
     var timeCreated: LocalDateTime? = null,
 
     @Column(name = "time_updated")
-    var timeUpdated: LocalDateTime? = null,
-
-    @OneToMany
-    @JoinColumn(
-        name = "org_id",
-        foreignKey = ForeignKey(name = "fk_organization")
-    )
-    var merchants: List<Merchant>? = null
+    var timeUpdated: LocalDateTime? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
-        other as Organization
+        other as Merchant
 
         return id != null && id == other.id
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(id, name, account)
+    override fun hashCode(): Int = 0
 
-
+    @Override
     override fun toString(): String {
-        return this::class.simpleName + "(id = $id , name = $name , legalAddress = $legalAddress )"
+        return this::class.simpleName + "(id = $id , name = $name , organizationId = $organizationId )"
     }
 }
+
+

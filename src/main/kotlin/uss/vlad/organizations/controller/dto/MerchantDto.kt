@@ -2,13 +2,12 @@ package uss.vlad.organizations.controller.dto
 
 import io.swagger.annotations.ApiModel
 
-
 @ApiModel
-class OrganizationDto(
+class MerchantDto(
 
     var name: String? = null,
 
-    var account: String? = null,
+    var address: String? = null,
 
-    var legalAddress: String? = null
+    var organizationId: Long? = null
 )

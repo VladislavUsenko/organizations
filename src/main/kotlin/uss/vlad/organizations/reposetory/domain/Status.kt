@@ -1,6 +1,6 @@
 package uss.vlad.organizations.reposetory.domain
 
-enum class OrganizationStatus(value: Int) {
+enum class Status(value: Int) {
     DISABLED(0),
     ENABLED(1)
 
