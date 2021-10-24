@@ -1,4 +1,4 @@
-#Spring Boot REST example
+# Spring Boot REST example
 
 restful API service for organizations and merchants
 
